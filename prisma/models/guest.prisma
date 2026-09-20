@@ -1,0 +1,13 @@
+model Guest {
+  id                    Int       @id @default(autoincrement())
+  name                  String
+  refreshToken          String?
+  refreshTokenExpiresAt DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
+  orders                Order[]
+
+  @@index([deletedAt])
+  @@map("Guest")
+}

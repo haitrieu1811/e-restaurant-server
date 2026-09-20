@@ -1,0 +1,19 @@
+model Order {
+  id                Int             @id @default(autoincrement())
+  guestId           Int?
+  guest             Guest?          @relation(fields: [guestId], references: [id], onDelete: SetNull)
+  tableNumber       Int?
+  table             Table?          @relation(fields: [tableNumber], references: [number], onDelete: SetNull)
+  productSnapshotId Int             @unique
+  productSnapshot   ProductSnapshot @relation(fields: [productSnapshotId], references: [id], onDelete: Restrict)
+  quantity          Int
+  orderHandlerId    Int?
+  orderHandler      User?           @relation(fields: [orderHandlerId], references: [id], onDelete: SetNull)
+  status            OrderStatus     @default(PENDING)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  deletedAt         DateTime?
+
+  @@index([deletedAt])
+  @@map("Order")
+}

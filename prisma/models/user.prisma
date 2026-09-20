@@ -1,0 +1,23 @@
+model User {
+  id                  Int          @id @default(autoincrement())
+  roleId              Int
+  role                Role         @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  email               String       @unique
+  phoneNumber         String?      @unique
+  name                String
+  password            String
+  isActive            Boolean      @default(true)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  deletedAt           DateTime?
+  refreshTokens       RefreshToken[]
+  handledOrders       Order[]
+  createdRoles        Role[]       @relation("RoleCreatedBy")
+  createdPermissions Permission[] @relation("PermissionCreatedBy")
+  createdCategories  Category[]   @relation("CategoryCreatedBy")
+  createdProducts     Product[]    @relation("ProductCreatedBy")
+  createdTables       Table[]      @relation("TableCreatedBy")
+
+  @@index([deletedAt])
+  @@map("User")
+}

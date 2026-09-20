@@ -1,0 +1,20 @@
+model ProductSnapshot {
+  id           Int           @id @default(autoincrement())
+  productId    Int?
+  product      Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
+  categoryId   Int
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  name         String
+  description  String?
+  basePrice    Decimal
+  virtualPrice Decimal?
+  imageUrl     String?
+  status       ProductStatus @default(AVAILABLE)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  order        Order?
+
+  @@index([deletedAt])
+  @@map("ProductSnapshot")
+}

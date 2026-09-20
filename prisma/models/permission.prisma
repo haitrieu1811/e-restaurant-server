@@ -1,0 +1,17 @@
+model Permission {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  method      HttpMethod @default(GET)
+  path        String
+  module      String
+  description String?
+  createdById Int?
+  createdBy   User?      @relation("PermissionCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+  roles       Role[]
+
+  @@index([deletedAt])
+  @@map("Permission")
+}

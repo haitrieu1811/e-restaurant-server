@@ -1,28 +1,18 @@
 import { z } from 'zod'
+import dotenv from 'dotenv'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
-// Nạp các biến từ file .env nếu chưa được nạp vào process.env
 const envPath = path.resolve(process.cwd(), '.env')
-if (fs.existsSync(envPath)) {
-  const envConfigContent = fs.readFileSync(envPath, 'utf-8')
-  for (const line of envConfigContent.split('\n')) {
-    const trimmedLine = line.trim()
-    if (trimmedLine && !trimmedLine.startsWith('#')) {
-      const equalIndex = trimmedLine.indexOf('=')
-      if (equalIndex !== -1) {
-        const key = trimmedLine.slice(0, equalIndex).trim()
-        let value = trimmedLine.slice(equalIndex + 1).trim()
-        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-          value = value.slice(1, -1)
-        }
-        if (!process.env[key]) {
-          process.env[key] = value
-        }
-      }
-    }
-  }
+
+// Validate file .env có tồn tại hay không
+if (!fs.existsSync(envPath)) {
+  console.error('❌ Error: File .env không tồn tại. Vui lòng tạo file .env tại thư mục gốc của server.')
+  throw new Error('File .env không tồn tại')
 }
+
+// Nạp các biến môi trường từ file .env bằng thư viện dotenv
+dotenv.config({ path: envPath })
 
 // Định nghĩa Zod Schema validate các biến môi trường
 export const configSchema = z.object({

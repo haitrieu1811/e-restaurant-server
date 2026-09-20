@@ -1,0 +1,20 @@
+model Product {
+  id               Int               @id @default(autoincrement())
+  categoryId       Int
+  category         Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  name             String
+  description      String?
+  basePrice        Decimal
+  virtualPrice     Decimal?
+  imageUrl         String?
+  status           ProductStatus     @default(AVAILABLE)
+  createdById      Int?
+  createdBy        User?             @relation("ProductCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  deletedAt        DateTime?
+  productSnapshots ProductSnapshot[]
+
+  @@index([deletedAt])
+  @@map("Product")
+}
