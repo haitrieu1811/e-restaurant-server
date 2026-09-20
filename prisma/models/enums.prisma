@@ -11,11 +11,6 @@ enum ProductStatus {
   DISCONTINUED
 }
 
-enum Station {
-  KITCHEN
-  BAR
-}
-
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -25,45 +20,9 @@ enum OrderStatus {
   CANCELLED
 }
 
-enum OrderItemStatus {
-  PENDING
-  PREPARING
-  READY
-  SERVED
-  CANCELLED
-}
-
 enum OrderType {
   DINE_IN
   TAKE_AWAY
-}
-
-enum PaymentMethod {
-  CASH
-  VIETQR
-  MOMO
-  ZALOPAY
-  CREDIT_CARD
-}
-
-enum PaymentStatus {
-  PENDING
-  PAID
-  FAILED
-  REFUNDED
-}
-
-enum RequestType {
-  CALL_WAITER
-  REQUEST_BILL
-  ADD_UTENSILS
-  OTHER
-}
-
-enum RequestStatus {
-  PENDING
-  PROCESSING
-  RESOLVED
 }
 
 enum HttpMethod {

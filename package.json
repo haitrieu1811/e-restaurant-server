@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "seed-data": "bun run scripts/seed-data",
+    "create-permissions": "bun run scripts/create-permissions",
     "build": "nest build",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

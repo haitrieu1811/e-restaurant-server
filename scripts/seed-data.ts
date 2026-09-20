@@ -1,9 +1,9 @@
 import { PrismaPg } from '@prisma/adapter-pg'
 
 import envConfig from '@/shared/constants/config.js'
-import { PrismaClient } from '@/generated/prisma/client.js'
 import { BASE_ROLES } from '@/shared/constants/auth.js'
 import { HashingService } from '@/shared/services/hashing.service.js'
+import { PrismaClient } from '@/generated/prisma/client.js'
 
 const adapter = new PrismaPg({
   connectionString: envConfig.DATABASE_URL
