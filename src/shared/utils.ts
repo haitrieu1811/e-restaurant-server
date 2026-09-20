@@ -1,3 +1,4 @@
+import { Prisma } from '@/generated/prisma/client.js'
 import bcrypt from 'bcryptjs'
 
 const SALT_ROUNDS = 10
@@ -15,3 +16,22 @@ export const hashValue = async (value: string): Promise<string> => {
 export const compareValue = async (value: string, hash: string): Promise<boolean> => {
   return bcrypt.compare(value, hash)
 }
+
+/**
+ * Kiểm tra xem error có phải là lỗi Prisma Unique Constraint (P2002) hay không
+ */
+export const isPrismaUniqueConstraintError = (
+  error: unknown
+): error is Prisma.PrismaClientKnownRequestError => {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002'
+}
+
+/**
+ * Kiểm tra xem error có phải là lỗi Prisma Record Not Found (P2025) hay không
+ */
+export const isPrismaNotFoundError = (
+  error: unknown
+): error is Prisma.PrismaClientKnownRequestError => {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025'
+}
+
