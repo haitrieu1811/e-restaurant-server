@@ -6,7 +6,8 @@ import {
   EmailAlreadyExistsException,
   InvalidPasswordException,
   PhoneNumberAlreadyExistsException,
-  RefreshTokenNotFoundException
+  RefreshTokenNotFoundException,
+  UserInactiveException
 } from '@/routes/auth/auth.error.js'
 import { AuthRepo } from '@/routes/auth/auth.repo.js'
 import {
@@ -71,6 +72,10 @@ export class AuthService {
     })
     if (!user) {
       throw UserNotFoundException
+    }
+
+    if (!user.isActive) {
+      throw UserInactiveException
     }
 
     const isPasswordValid = await this.hashingService.compare(body.password, user.password)

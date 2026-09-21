@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '@/shared/services/prisma.service.js'
-import { UserCreateInput, UserWhereUniqueInput } from '@/generated/prisma/models.js'
+import { UserCreateInput, UserUpdateInput, UserWhereUniqueInput } from '@/generated/prisma/models.js'
 
 @Injectable()
 export class SharedUserRepo {
@@ -15,6 +15,13 @@ export class SharedUserRepo {
 
   create(data: UserCreateInput) {
     return this.prisma.user.create({
+      data
+    })
+  }
+
+  update(where: UserWhereUniqueInput, data: UserUpdateInput) {
+    return this.prisma.user.update({
+      where,
       data
     })
   }

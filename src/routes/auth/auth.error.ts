@@ -27,3 +27,11 @@ export const PhoneNumberAlreadyExistsException = new UnprocessableEntityExceptio
     message: 'Error.PhoneNumberAlreadyExists'
   }
 ])
+
+export const UserInactiveException = new UnprocessableEntityException([
+  {
+    path: 'email',
+    message: 'Error.UserInactive'
+  }
+])
+

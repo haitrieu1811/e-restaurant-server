@@ -6,6 +6,7 @@ export const UserSchema = z.object({
   email: z.email('Error.EmailInvalid').trim(),
   phoneNumber: z.string().nullable().optional(),
   name: z.string({ message: 'Error.NameRequired' }).min(1, 'Error.NameRequired'),
+  avatar: z.string().nullable().optional(),
   password: z
     .string({ message: 'Error.PasswordRequired' })
     .min(8, 'Error.PasswordTooShort')
