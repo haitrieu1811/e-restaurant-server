@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common'
-import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
+import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
 import { ZodSerializerInterceptor } from 'nestjs-zod'
 
 import { AuthModule } from '@/routes/auth/auth.module.js'
 import { UserModule } from '@/routes/user/user.module.js'
+import { AuthenticationGuard } from '@/shared/guards/authentication.guard.js'
 import CustomZodValidationPipe from '@/shared/pipes/custom-zod-validation.pipe.js'
 import { SharedModule } from '@/shared/shared.module.js'
 
@@ -17,6 +18,10 @@ import { SharedModule } from '@/shared/shared.module.js'
     {
       provide: APP_INTERCEPTOR,
       useClass: ZodSerializerInterceptor
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard
     }
   ]
 })

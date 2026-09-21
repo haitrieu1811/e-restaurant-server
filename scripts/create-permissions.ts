@@ -69,14 +69,12 @@ export function discoverRoutes(app: INestApplication): DiscoveredRoute[] {
 }
 
 // Cấu hình giới hạn permissions cho từng role (ngoại trừ ADMIN)
-const ROLE_PERMISSION_RULES: Record<string, { modules: string[]; allowedMethods?: HttpMethod[] }> = {
+const ROLE_PERMISSION_RULES: Record<string, { modules: string[] }> = {
   STAFF: {
-    modules: ['table', 'order', 'category', 'product', 'guest', 'app'],
-    allowedMethods: [HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH]
+    modules: ['order', 'auth']
   },
   CHEF: {
-    modules: ['order', 'category', 'product', 'app'],
-    allowedMethods: [HttpMethod.GET, HttpMethod.PATCH]
+    modules: ['order', 'auth']
   }
 }
 
@@ -175,11 +173,7 @@ async function createPermissions() {
       let allowedPerms: typeof allPermissions = []
 
       if (rule) {
-        allowedPerms = allPermissions.filter((p) => {
-          const matchesModule = rule.modules.includes(p.module)
-          const matchesMethod = rule.allowedMethods ? rule.allowedMethods.includes(p.method) : true
-          return matchesModule && matchesMethod
-        })
+        allowedPerms = allPermissions.filter((p) => rule.modules.includes(p.module))
       }
 
       await prisma.role.update({

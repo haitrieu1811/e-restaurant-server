@@ -12,11 +12,13 @@ import {
   RegisterResDTO
 } from '@/routes/auth/auth.dto.js'
 import { AuthService } from '@/routes/auth/auth.service.js'
+import { IsPublic } from '@/shared/decorators/is-public.decorator.js'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @IsPublic()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ZodResponse({ type: LoginResDTO })
@@ -24,12 +26,14 @@ export class AuthController {
     return this.authService.login(body)
   }
 
+  @IsPublic()
   @Post('register')
   @ZodResponse({ type: RegisterResDTO })
   register(@Body() body: RegisterBodyDTO) {
     return this.authService.register(body)
   }
 
+  @IsPublic()
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
   @ZodResponse({ type: RefreshTokenResDTO })
